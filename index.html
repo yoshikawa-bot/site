@@ -1,127 +1,89 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Página de apresentação com cards informativos e links externos.">
-  <title>Projeto Genérico</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <title>Yoshikawa Audio Player</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-    }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      color: #fff;
-      background-image: url('https://i.postimg.cc/65XbRG1f/20250709-215924.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: -1;
-    }
-    :root {
-      --bg-color: rgba(0, 0, 0, 0.25);
-      --highlight: rgba(255, 255, 255, 0.15);
-      --text: #ffffff;
-    }
-    header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      z-index: 100;
-      backdrop-filter: blur(10px);
-      background: var(--bg-color);
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
     }
-    .container {
-      max-width: 960px;
-      margin: 100px auto 0;
-      padding: 0 16px 40px;
-      flex: 1 0 auto;
-    }
-    .card {
-      position: relative;
-      background: var(--bg-color);
-      border-radius: 12px;
-      margin-bottom: 24px;
-      padding: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: inset 1px 1px 1px var(--highlight);
-      transition: transform 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-    }
-    .card h2 {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-    }
-    .card p {
-      font-size: 1rem;
-      color: #ddd;
-      margin-bottom: 16px;
-    }
-    .card a {
-      color: #00aaff;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .card a:hover {
-      text-decoration: underline;
-    }
-    footer {
+    .player-container {
       text-align: center;
       padding: 20px;
-      font-size: 0.875rem;
-      color: #ccc;
-      background: var(--bg-color);
-      backdrop-filter: blur(10px);
-      flex-shrink: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 90%;
+    }
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    audio {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+    .error-message {
+      color: red;
+      font-size: 1em;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div>© Projeto Genérico</div>
-    <div><i class="fas fa-globe"></i></div>
-  </header>
-  <div class="container">
-    <div class="card">
-      <h2>Card Título 1</h2>
-      <p>Descrição breve do conteúdo ou serviço apresentado neste card.</p>
-      <a href="https://exemplo.com" target="_blank">Acessar link externo</a>
-    </div>
-    <div class="card">
-      <h2>Card Título 2</h2>
-      <p>Informação complementar ou funcionalidade adicional. Pode ser qualquer texto genérico.</p>
-      <a href="https://outroexemplo.com" target="_blank">Visitar página</a>
-    </div>
-    <div class="card">
-      <h2>Card Título 3</h2>
-      <p>Terceiro card adicionado com informações relevantes sobre o projeto ou serviço oferecido.</p>
-      <a href="https://terceiroexemplo.com" target="_blank">Saiba mais</a>
-    </div>
-    <div class="card">
-      <h2>Card Título 4</h2>
-      <p>Quarto card com detalhes adicionais, recursos extras ou qualquer outro conteúdo informativo.</p>
-      <a href="https://quartoexemplo.com" target="_blank">Conheça nossos serviços</a>
-    </div>
+  <div class="player-container">
+    <h1 id="audio-title">Carregando...</h1>
+    <audio id="audio-player" controls>
+      <source id="audio-source" src="" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <p id="error-message" class="error-message" style="display: none;"></p>
   </div>
-  <footer>
-    Página estática genérica para hospedagem no GitHub Pages.
-  </footer>
+
+  <script>
+    // Função para obter parâmetros da URL
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // Carregar título e URL do áudio
+    const audioUrl = decodeURIComponent(getQueryParam('audio_url'));
+    const audioTitle = decodeURIComponent(getQueryParam('title')) || 'Áudio sem título';
+
+    // Atualizar título e player
+    const titleElement = document.getElementById('audio-title');
+    const audioSource = document.getElementById('audio-source');
+    const audioPlayer = document.getElementById('audio-player');
+    const errorMessage = document.getElementById('error-message');
+
+    titleElement.textContent = audioTitle;
+
+    if (audioUrl) {
+      audioSource.src = audioUrl;
+      audioPlayer.load();
+
+      // Verificar se o áudio carrega corretamente
+      audioPlayer.addEventListener('error', () => {
+        errorMessage.textContent = 'Erro ao carregar o áudio. Verifique a URL ou tente novamente.';
+        errorMessage.style.display = 'block';
+      });
+    } else {
+      errorMessage.textContent = 'Nenhuma URL de áudio fornecida.';
+      errorMessage.style.display = 'block';
+      audioPlayer.style.display = 'none';
+    }
+  </script>
 </body>
 </html>
