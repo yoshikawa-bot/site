@@ -92,6 +92,7 @@
         .header-logo {
             display: flex;
             align-items: center;
+            cursor: pointer;
         }
         .header-logo img {
             width: 40px;
@@ -376,12 +377,17 @@
         </filter>
     </svg>
 
+    <audio id="backgroundMusic" loop>
+        <source src="https://yoshikawa-bot.github.io/site/audio.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
     <header>
         <div class="glass-filter"></div>
         <div class="glass-overlay"></div>
         <div class="glass-specular"></div>
         <div class="header-content">
-            <div class="header-logo">
+            <div class="header-logo" role="button" aria-label="Tocar/Pausar música">
                 <img src="https://yoshikawa-bot.github.io/cache/images/e6978933.jpg" alt="Yoshikawa Bot Logo">
             </div>
             <div class="menu-icon" id="menuButton" role="button" aria-label="Abrir menu de suporte" aria-expanded="false">
@@ -416,7 +422,7 @@
                 <ul>
                     <li><i class="fas fa-image"></i> Criar figurinhas a partir de imagens e vídeos</li>
                     <li><i class="fas fa-music"></i> Baixar músicas diretamente no WhatsApp</li>
-                    <li><i class="fas fa-film"></i>Streaming de filmes, séries e animes</li>
+                    <li><i class="fas fa-film"></i> Streaming de filmes, séries e animes</li>
                     <li><i class="fas fa-tools"></i> E muito mais, com comandos personalizados!</li>
                 </ul>
                 <p>O uso no privado é gratuito, mas alguns comandos exclusivos estão disponíveis para usuários VIP. Use o comando <strong>!alugar</strong> para mais detalhes.</p>
@@ -430,7 +436,7 @@
             <div class="glass-content">
                 <h2><i class="fas fa-code"></i> Tecnologias</h2>
                 <ul>
-                    <li><i class="fas fa-code"></i> <strong>Linguagens:</strong> Javascript + Node.js</li>
+                    <li><i class="fas fa-code"></i> <strong>Linguagens:</strong> Javascript + Node.js (v20)</li>
                     <li><i class="fas fa-file-code"></i> <strong>Formato:</strong> CommonJS</li>
                     <li><i class="fas fa-paint-brush"></i> <strong>Auxiliares:</strong> HTML + CSS</li>
                     <li><i class="fas fa-plug"></i> <strong>Conexão:</strong> Baileys-MD</li>
@@ -447,8 +453,8 @@
             <div class="glass-overlay"></div>
             <div class="glass-specular"></div>
             <div class="glass-content">
-                 <h2><i class="fab fa-whatsapp"></i> Adicione a Yoshikawa</h2>
-<p>WhatsApp: <a href="https://wa.me/554891842219" rel="noopener noreferrer" ></i>Clique aqui</a></p>
+                <h2><i class="fab fa-whatsapp"></i> Adicione a Yoshikawa</h2>
+                <p>WhatsApp: <a href="https://wa.me/554891842219" rel="noopener noreferrer" target="_blank">Clique aqui</a></p>
                 <p>Execute <strong>!menu</strong> para ver todos os comandos disponíveis!</p>
             </div>
         </div>
@@ -467,6 +473,8 @@
     <script>
         const menuButton = document.getElementById('menuButton');
         const supportPopup = document.getElementById('supportPopup');
+        const audio = document.getElementById('backgroundMusic');
+        const headerLogo = document.querySelector('.header-logo');
 
         function positionPopup() {
             const header = document.querySelector('header');
@@ -518,6 +526,19 @@
         }
 
         document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        headerLogo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (audio.paused) {
+                audio.play().catch(error => {
+                    console.log('Erro ao tentar reproduzir:', error);
+                });
+                headerLogo.setAttribute('aria-label', 'Pausar música');
+            } else {
+                audio.pause();
+                headerLogo.setAttribute('aria-label', 'Tocar música');
+            }
+        });
     </script>
 </body>
-</html>
+                </html>
