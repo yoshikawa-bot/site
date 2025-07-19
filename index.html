@@ -188,7 +188,6 @@
             margin-bottom: 3rem;
             width: 100%;
             max-width: 800px;
-            padding-top: 0.5rem;
         }
         .hero img {
             width: 100%;
@@ -278,7 +277,7 @@
         }
         .footer {
             position: relative;
-            padding: 1.5rem;
+            padding: 1.5/pulumi
             text-align: center;
             font-size: .8125rem;
             color: #ccc;
@@ -331,7 +330,6 @@
             }
             .hero {
                 max-width: 100%;
-                padding-top: 0.5rem;
             }
             .hero h1 {
                 font-size: 2rem;
@@ -484,12 +482,10 @@
             const header = document.querySelector('header');
             const headerHeight = header.offsetHeight;
             supportPopup.style.top = `${headerHeight + 5}px`;
-            console.log('Pop-up positioned at top:', supportPopup.style.top);
         }
 
         menuButton.addEventListener('click', (e) => {
             e.stopPropagation();
-            console.log('Menu button clicked');
             const isActive = menuButton.classList.toggle('active');
             supportPopup.classList.toggle('visible');
             const icon = menuButton.querySelector('i');
@@ -503,7 +499,6 @@
 
         document.addEventListener('click', (e) => {
             if (!supportPopup.contains(e.target) && !menuButton.contains(e.target)) {
-                console.log('Clicked outside pop-up');
                 supportPopup.classList.remove('visible');
                 menuButton.classList.remove('active');
                 const icon = menuButton.querySelector('i');
@@ -536,20 +531,17 @@
 
         headerLogo.addEventListener('click', (e) => {
             e.stopPropagation();
-            console.log('Header logo clicked');
             if (audio.paused) {
                 audio.play().then(() => {
-                    console.log('Audio playing');
                     headerLogo.setAttribute('aria-label', 'Pausar música');
                 }).catch(error => {
                     console.error('Erro ao reproduzir áudio:', error);
                 });
             } else {
                 audio.pause();
-                console.log('Audio paused');
                 headerLogo.setAttribute('aria-label', 'Tocar música');
             }
         });
     </script>
 </body>
-    </html>
+</html>
