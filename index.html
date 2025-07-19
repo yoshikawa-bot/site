@@ -28,7 +28,8 @@
             overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
-            background: url('https://yoshikawa-bot.github.io/cache/images/2926e9b3.jpg') no-repeat center/cover fixed, linear-gradient(to bottom, #1a1a1a, #000);
+            background: url('https://yoshikawa-bot.github.io/cache/images/2926e9b3.jpg') no-repeat center/cover fixed;
+            background-attachment: fixed; /* Ensures the background stays static */
             position: relative;
         }
         body::before {
@@ -495,7 +496,7 @@
         });
 
         document.addEventListener('click', (e) => {
-            if (!supportPopup.contains(e.target) && !menuButton.contains(e在那里).target) {
+            if (!supportPopup.contains(e.target) && !menuButton.contains(e.target)) {
                 supportPopup.classList.remove('visible');
                 menuButton.classList.remove('active');
                 const icon = menuButton.querySelector('i');
@@ -540,4 +541,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
